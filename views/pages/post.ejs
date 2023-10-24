@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <!-- navbar -->
+    <%-include('../partials/header.ejs')%>
+    
+    <div class="container d-flex justify-content-center w-100" style="flex-direction: column;">
+        <%Object.values(data).forEach(function (item,index){%>
+            <div>
+                <h1><%=userName[index]%></h1>
+                <img src="./post_picture/<%=item.imageName%>" alt="image" style=" width: 100%; height: 300px;">
+                <p><%=item.text %></p>
+                <a class="btn btn-danger" href="/delete/<%=item._id%>">delete</a>
+                <a class="btn btn-primary" href="/update/post/<%=item._id%>">update</a>
+                <div class="form-floating mt-3">
+                    <form  action="/create/comment/<%=item._id%>" method="post">
+                        <textarea class="form-control mb-3" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="commenttext" required></textarea>
+                        <input class="btn btn-success" type="submit" value="post comment">
+
+                    </form>
+                </div>
+            </div>
+            <!-- code comment here -->
+            <fieldset class="border p-2 mt-3">
+                <legend id="commentLegend" class="form-legend">Comments</legend>
+                <!-- เพิ่มฟิลด์ข้อมูล comment หรือข้อมูลอื่น ๆ ต่อไปนี้ -->
+                <ul class="list-group">
+                    <% if(comment != null) {%>
+                        <%Object.values(comment).forEach((item,index)=>{%>
+                            
+                            <%if(index != 0){%>
+                                <li class="list-group-item"> [<%=item.from%>] : <%=item.commentText%></li>
+                            <% } %>
+                        <%})%>
+                    <%}%>
+                </ul>
+            </fieldset>
+            
+        <%})%>
+        
+    </div>
+        
+  
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
